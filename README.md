@@ -15,3 +15,4 @@
 ![IMG_20230627_173132 1](https://github.com/bakuma64/svetovoy-Indikator-raskladki/assets/46646555/8c855558-ade3-4cfa-ab38-262114625524)
 
 
+![VID_20230628_125535](https://github.com/bakuma64/svetovoy-Indikator-raskladki/assets/46646555/f8c44582-8a41-463a-a494-faa08f0dd94c)
