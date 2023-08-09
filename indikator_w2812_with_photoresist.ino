@@ -14,9 +14,12 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   int val = analogRead(PIN_PHOTO_SENSOR);
-  int new_bright = map(val, 20, 900, 10, 230);
-  pixels.setBrightness(200 - new_bright);
+ val = constrain (val, 80, 450);
+  int new_bright = map (val , 80 , 450, 0 , 50);
+  new_bright = 150 - new_bright*2;
 
+  new_bright = constrain (new_bright, 15 , 150);
+  pixels.setBrightness(new_bright);
   // safe guard to prevent not beeing able to reprogram arduino
   // on some arduino types that can happen if serial, keyboard and/or mouse input gets sent to pc constantly directly after boot
   pinMode(LED_BUILTIN, OUTPUT);
@@ -39,6 +42,7 @@ void setup() {
   {
     Serial.begin(9600);
     Serial.print("Ready");
+    Serial.print(new_bright);
   }
 
 }
@@ -47,23 +51,25 @@ void setup() {
 void loop()  {
   int val = analogRead(PIN_PHOTO_SENSOR);
   //Serial.println(val);
-  //Serial.println(ledPower);
-  // analogWrite(PIN, ledPower);
-  pixels.setPixelColor(8, pixels.Color(r, g, b));
-  int new_bright = map(val, 20, 900, 0, 255);
-  pixels.setBrightness(265 - new_bright);
+  val = constrain (val, 80, 450);
+  int new_bright = map (val , 80 , 450, 0 , 150);
+  new_bright = 150 - new_bright*4;
+
+  new_bright = constrain (new_bright, 15 , 150);
+  pixels.setBrightness(new_bright);
+
+  //Serial.println(new_bright);
   pixels.show();   // Send the updated pixel colors to the hardware.
 
   if (Serial.available() > 0) {
     inByte = Serial.read();
+
     if (inByte == '2') { // RU
       for (int i = 0; i < NUMPIXELS; i++) { // For each pixel...
         r = 0;
         g = 255;
         b = 35;
         pixels.setPixelColor(i, pixels.Color(r, g, b));
-       // int new_bright = map(val, 20, 900, 10, 230);
-       // pixels.setBrightness(200 - new_bright);
         pixels.show();   // Send the updated pixel colors to the hardware.
       }
       delay(20); // Pause before next pass through loop
